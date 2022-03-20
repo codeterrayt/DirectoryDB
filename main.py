@@ -175,7 +175,7 @@ class DirectoryDB:
         if is_dbtb_exists != self.SUCCESS: return is_dbtb_exists
 
         if not isinstance(columns, dict):
-            print("COLUMNS SHOULD IN DICT FORMAT")
+            self.__log("COLUMNS SHOULD IN DICT FORMAT")
             return self.INVALID_INPUT
         table_path = self.__GetTablePath(db, table)
         table = pd.read_csv(table_path)
@@ -190,7 +190,7 @@ class DirectoryDB:
         table_path = self.__GetTablePath(db, table)
         table = pd.read_csv(table_path)
         if not isinstance(data, list):
-            print("DATA SHOULD BE IN LIST FORMAT")
+            self.__log("DATA SHOULD BE IN LIST FORMAT")
             return self.INVALID_INPUT
         for d in data:
             table = table.append(d, ignore_index=True)
@@ -356,7 +356,6 @@ class DirectoryDB:
             table_file.to_csv(table_path, index=False)
             return self.SUCCESS
         except Exception as e:
-            print(e)
             return self.COLUMN_NOT_FOUND
 
     def UpdateRowsByIndex(self, db: str, table: str, indexes: list, update_data: dict):
@@ -373,7 +372,7 @@ class DirectoryDB:
             table_file.to_csv(table_path, index=False)
             return self.SUCCESS
         except Exception as e:
-            print(e)
+            self.__log(e)
             return self.COLUMN_NOT_FOUND
 
     def UpdateRowsOnCondition(self, db: str, table: str):
